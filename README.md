@@ -1,8 +1,8 @@
-# Minimal Access Scan for Gradle, with Debricked Github Action
+# Source-codeless Scan for Gradle, with Debricked Github Action
 
 This example shows how you can use the Debricked Github Action to scan the dependencies of your Gradle repository, without uploading the source code to Debricked.
-This is called a _Minimal Access Scan_, and is available for Gradle and Maven.
-Note that most other languages, such as JavaScript and Python, are already minimal access by default, and you don't need to take any further action.
+This is called a _Source-codeless Scan_, and is available for Gradle and Maven.
+Note that most other languages, such as JavaScript and Python, are already sourcecode-less by default, and you don't need to take any further action.
 
 To do this for Gradle, two steps need to be performed.
 
