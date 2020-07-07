@@ -29,7 +29,7 @@ The output file _must_ be placed in the same directory as the `build.gradle` fil
 In [.github/workflow/vulnerabilites.yml](.github/workflow/vulnerabilites.yml), this is the first part of the workflow, i.e., the following step:
 
 ```
-    - run: ./gradlew dependencies > .debricked-gradle-dependencies.txt
+    - run: sh ./gradlew dependencies > .debricked-gradle-dependencies.txt
 ```
 
 If you haven't already, you also need to choose which Java version to use beforehand, like below:
@@ -38,7 +38,7 @@ If you haven't already, you also need to choose which Java version to use before
     - uses: actions/setup-java@v1
       with:
         java-version: '13'
-    - run: ./gradlew dependencies > .debricked-gradle-dependencies.txt
+    - run: sh ./gradlew dependencies > .debricked-gradle-dependencies.txt
 ```
 
 If you don't use the Gradle wrapper `gradlew` in your repository, you need to install the correct Gradle version yourself beforehand.

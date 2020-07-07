@@ -11,7 +11,7 @@ jobs:
     - uses: actions/setup-java@v1
       with:
         java-version: '13'
-    - run: ./gradlew dependencies > .debricked-gradle-dependencies.txt
+    - run: sh ./gradlew dependencies > .debricked-gradle-dependencies.txt
     - uses: debricked/actions/scan@v1
       env:
         USERNAME: ${{ secrets.DEBRICKED_USERNAME }}
