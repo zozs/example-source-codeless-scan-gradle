@@ -15,7 +15,7 @@ This repository shows how this can be done for a simple Gradle project.
 
 Here is a description of the two steps above in more details.
 
-If you want to look at the final version of a working file, look in the [.github/workflow/vulnerabilites.yml](.github/workflow/vulnerabilites.yml) workflow file in this repository.
+If you want to look at the final version of a working file, look in the [.github/workflows/vulnerabilities.yml](.github/workflows/vulnerabilities.yml) workflow file in this repository.
 The different parts of it are described below.
 
 ### Generate a list of dependencies
@@ -26,7 +26,7 @@ Conceptually, what needs to be done is to run: `gradle dependencies > .debricked
 The output filename is important, the Debricked integration will look for these files in the next step.
 The output file _must_ be placed in the same directory as the `build.gradle` file it belongs to, otherwise Debricked cannot connect them together.
 
-In [.github/workflow/vulnerabilites.yml](.github/workflow/vulnerabilites.yml), this is the first part of the workflow, i.e., the following step:
+In [.github/workflows/vulnerabilities.yml](.github/workflows/vulnerabilities.yml), this is the first part of the workflow, i.e., the following step:
 
 ```
     - run: sh ./gradlew dependencies > .debricked-gradle-dependencies.txt
