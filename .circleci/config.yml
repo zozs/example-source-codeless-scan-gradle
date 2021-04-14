@@ -5,11 +5,12 @@
 
 workflows:
   version: 2
-  jobs:
-    - sourcecodeless
-    - scan:
-        requires:
-          - sourcecodeless
+  flow:
+    jobs:
+      - sourcecodeless
+      - scan:
+          requires:
+            - sourcecodeless
 
 jobs:
   sourcecodeless:
