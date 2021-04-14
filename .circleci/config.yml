@@ -4,10 +4,10 @@
 #
 version: 2
 jobs:
-  build:
+  sourcecodeless:
     docker:
       # specify the version you desire here
-      - image: circleci/openjdk:11-jdk
+      - image: circleci/openjdk:13-jdk
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -23,20 +23,21 @@ jobs:
 
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "build.gradle" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run: gradle dependencies
-
-      - save_cache:
+      - run: sh ./gradlew dependencies > .debricked-gradle-dependencies.txt
+      - persist_to_workspace:
+          root: ~/repo
           paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
+            - .debricked-gradle-dependencies.txt
 
-      # run tests!
-      - run: gradle test
+  scan:
+    docker:
+      - image: node:14
+    
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - run: find .
+      - run: find ~/repo
