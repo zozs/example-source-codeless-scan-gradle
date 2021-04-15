@@ -32,18 +32,17 @@ jobs:
       # circleci ignores the entrypoint of debricked-scan, so start the scan manually with a step
       - image: debricked/debricked-scan
     
-    # debricked username and password, set in project context to not expose them in circleci config
-    environment:
-      USERNAME: $DEBRICKED_USERNAME
-      PASSWORD: $DEBRICKED_PASSWORD
-
     working_directory: ~/repo
-
+    
+    # set debricked username and password in DEBRICKED_USERNAME and DEBRICKED_PASSWORD respectively,
+    # to avoid storing them in config
     steps:
       - checkout
       - attach_workspace:
           at: ~/repo
       - run: |
+          USERNAME="${DEBRICKED_USERNAME}"
+          PASSWORD="${DEBRICKED_PASSWORD}"
           REPOSITORY="${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
           COMMIT="${CIRCLE_SHA1}"
           BRANCH="${CIRCLE_BRANCH}"
