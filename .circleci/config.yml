@@ -33,20 +33,11 @@ jobs:
       - image: debricked/debricked-scan
     
     working_directory: ~/repo
-    
-    # set debricked username and password in DEBRICKED_USERNAME and DEBRICKED_PASSWORD respectively,
-    # to avoid storing them in config
+
+    # set debricked username and password as DEBRICKED_USERNAME and DEBRICKED_PASSWORD respectively,
+    # inside project settings, to avoid storing them in config
     steps:
       - checkout
       - attach_workspace:
           at: ~/repo
-      - run: |
-          USERNAME="${DEBRICKED_USERNAME}"
-          PASSWORD="${DEBRICKED_PASSWORD}"
-          REPOSITORY="${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}"
-          COMMIT="${CIRCLE_SHA1}"
-          BRANCH="${CIRCLE_BRANCH}"
-          BASE_DIRECTORY=${BASE_DIRECTORY:=""}
-          REPOSITORY_URL=${CIRCLE_REPOSITORY_URL}
-          INTEGRATION_NAME=circleci
-          source /common.sh
+      - run: bash /circleci.sh
