@@ -1,43 +1,36 @@
-workflows:
-  version: 2
-  flow:
-    jobs:
-      - sourcecodeless
-      - scan:
-          requires:
-            - sourcecodeless
+version: 2.1
 
 jobs:
-  sourcecodeless:
+  build:
     docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:11-jdk
+    - image circleci/openjdk:11-jdk
 
     working_directory: ~/repo
 
-    environment:
-      TERM: dumb
-
     steps:
-      - checkout
-      - run: sh ./gradlew dependencies > .debricked-gradle-dependencies.txt
-      # it is important that the generated dependency tree is persisted and attached to the following scan step
-      - persist_to_workspace:
-          root: ~/repo
-          paths:
-            - .debricked-gradle-dependencies.txt
+    - checkout
+    - run: sh ./gradlew dependencies > .debricked-gradle-dependencies.txt
+    - persist_to_workspace:
+        root: ~/repo
+        paths:
+        - .debricked-gradle-dependencies.txt
 
   scan:
     docker:
-      # circleci ignores the entrypoint of debricked-scan, so start the scan manually with a step
-      - image: debricked/debricked-scan
-    
+    - image: debricked/debricked-scan
+
     working_directory: ~/repo
 
-    # set debricked username and password as DEBRICKED_USERNAME and DEBRICKED_PASSWORD respectively,
-    # inside project settings, to avoid storing them in config
     steps:
-      - checkout
-      - attach_workspace:
-          at: ~/repo
-      - run: bash /circleci.sh
+    - checkout
+    - attach_workspace:
+        at: ~/repo
+    - run: bash /circleci.sh
+
+workflows:
+  debricked-scan:
+    jobs:
+    - build
+    - scan:
+        requires:
+        - build
